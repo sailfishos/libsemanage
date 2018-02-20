@@ -20,8 +20,9 @@
 # TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 # SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-%define libsepolver 2.7-3
-%define libselinuxver 2.7-6
+%define libsepolver 2.7-1
+%define libselinuxver 2.7-1
+%define python3_sitearch /%{_libdir}/python3.?/site-packages
 
 Summary: SELinux binary policy manipulation library 
 Name: libsemanage
@@ -29,21 +30,16 @@ Version: 2.7
 Release: 9%{?dist}
 License: LGPLv2+
 Group: System Environment/Libraries
-Source: https://raw.githubusercontent.com/wiki/SELinuxProject/selinux/files/releases/20170804/libsemanage-2.7.tar.gz
-# download https://raw.githubusercontent.com/fedora-selinux/scripts/master/selinux/make-fedora-selinux-patch.sh
-# run:
-# $ VERSION=2.7 ./make-fedora-selinux-patch.sh libsemanage
-# HEAD https://github.com/fedora-selinux/selinux/commit/2d0b90c1d95ec908f94c06337ec07a96b7d1205e
-Patch1: libsemanage-fedora.patch
+Source: %{name}-%{version}.tar.bz2
 URL: https://github.com/SELinuxProject/selinux/wiki
 Source1: semanage.conf
 
 BuildRequires: libselinux-devel >= %{libselinuxver} swig ustr-devel
 BuildRequires: libsepol-devel >= %{libsepolver} 
 BuildRequires: audit-libs-devel
-BuildRequires: python2 python2-devel bison flex bzip2-devel
+BuildRequires: bison flex bzip2-devel
 
-BuildRequires: python3
+BuildRequires: python3-base
 BuildRequires: python3-devel
 
 Requires: bzip2-libs audit-libs
@@ -82,27 +78,13 @@ Requires: %{name}%{?_isa} = %{version}-%{release} ustr
 The semanage-devel package contains the libraries and header files
 needed for developing applications that manipulate binary policies. 
 
-%package -n python2-libsemanage
-%{?python_provide:%python_provide python2-libsemanage}
-# Remove before F30
-Provides: %{name}-python = %{version}-%{release}
-Provides: %{name}-python%{?_isa} = %{version}-%{release}
-Obsoletes: %{name}-python < %{version}-%{release}
-Summary: semanage python bindings for libsemanage
-Group: Development/Libraries
-Requires: %{name}%{?_isa} = %{version}-%{release}
-
-%description -n python2-libsemanage
-The libsemanage-python package contains the python bindings for developing 
-SELinux management applications. 
-
 %package -n python3-libsemanage
 Summary: semanage python 3 bindings for libsemanage
 Group: Development/Libraries
 Requires: %{name}%{?_isa} = %{version}-%{release}
 Requires: libselinux-python3
 %{?python_provide:%python_provide python3-libsemanage}
-# Remove before F30
+
 Provides: %{name}-python3 = %{version}-%{release}
 Provides: %{name}-python3%{?_isa} = %{version}-%{release}
 Obsoletes: %{name}-python3 < %{version}-%{release}
@@ -112,10 +94,11 @@ The libsemanage-python3 package contains the python 3 bindings for developing
 SELinux management applications.
 
 %prep
-%autosetup -n libsemanage-%{version} -p 1
-
+%setup -q -n %{name}-%{version}/upstream
 
 %build
+# only build libsemanage
+cd %{name}
 export LDFLAGS="%{?__global_ldflags}"
 
 # To support building the Python wrapper against multiple Python runtimes
@@ -176,8 +159,7 @@ rm -rf ${RPM_BUILD_ROOT}
 
 %files
 %defattr(-,root,root)
-%{!?_licensedir:%global license %%doc}
-%license COPYING
+%doc %{name}/COPYING
 %dir %{_sysconfdir}/selinux
 %config(noreplace) %{_sysconfdir}/selinux/semanage.conf
 %{_libdir}/libsemanage.so.1
@@ -199,11 +181,6 @@ rm -rf ${RPM_BUILD_ROOT}
 %dir %{_includedir}/semanage
 %{_includedir}/semanage/*.h
 %{_mandir}/man3/*
-
-%files -n python2-libsemanage
-%defattr(-,root,root)
-%{python2_sitearch}/_semanage.so
-%{python2_sitearch}/semanage.py*
 
 %files -n python3-libsemanage
 %defattr(-,root,root)
