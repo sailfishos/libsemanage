@@ -142,10 +142,6 @@ mkdir -p ${RPM_BUILD_ROOT}%{_sharedstatedir}/selinux/tmp
 make DESTDIR="${RPM_BUILD_ROOT}" LIBDIR="${RPM_BUILD_ROOT}%{_libdir}" SHLIBDIR="${RPM_BUILD_ROOT}/%{_libdir}" install
 
 InstallPythonWrapper \
-  %{__python} \
-  .so
-
-InstallPythonWrapper \
   %{__python3} \
   $(python3-config --extension-suffix)
   
