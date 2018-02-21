@@ -39,6 +39,9 @@ BuildRequires: libsepol-devel >= %{libsepolver}
 BuildRequires: audit-libs-devel
 BuildRequires: bison flex bzip2-devel
 
+# we don't build python2 modules, but make clean expects python2 (could be patched out though)
+BuildRequires: python
+
 BuildRequires: python3-base
 BuildRequires: python3-devel
 
