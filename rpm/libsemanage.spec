@@ -33,6 +33,7 @@ Group: System Environment/Libraries
 Source: %{name}-%{version}.tar.bz2
 URL: https://github.com/SELinuxProject/selinux/wiki
 Source1: semanage.conf
+Patch1: ln_old_coreutils.patch
 
 BuildRequires: libselinux-devel >= %{libselinuxver} swig ustr-devel
 BuildRequires: libsepol-devel >= %{libsepolver} 
@@ -98,6 +99,7 @@ SELinux management applications.
 
 %prep
 %setup -q -n %{name}-%{version}/upstream
+%patch1
 
 %build
 # only build libsemanage
