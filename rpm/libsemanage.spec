@@ -157,6 +157,11 @@ sed -i '1s%\(#! */usr/bin/python\)\([^3].*\|\)$%\13\2%' %{buildroot}%{_libexecdi
 %clean
 rm -rf ${RPM_BUILD_ROOT}
 
+%post
+/sbin/ldconfig
+
+%postun -p /sbin/ldconfig
+
 %files
 %defattr(-,root,root)
 %doc %{name}/COPYING
@@ -168,7 +173,6 @@ rm -rf ${RPM_BUILD_ROOT}
 %dir %{_sharedstatedir}/selinux
 %dir %{_sharedstatedir}/selinux/tmp
 
-%ldconfig_scriptlets
 
 %files static
 %defattr(-,root,root)
