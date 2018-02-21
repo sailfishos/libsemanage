@@ -102,8 +102,6 @@ SELinux management applications.
 %patch1
 
 %build
-# only build libsemanage
-cd %{name}
 export LDFLAGS="%{?__global_ldflags}"
 
 # To support building the Python wrapper against multiple Python runtimes
@@ -120,6 +118,8 @@ BuildPythonWrapper() {
 }
 
 make clean
+# only build libsemanage
+cd %{name}
 make CFLAGS="%{optflags}" swigify
 make CFLAGS="%{optflags}" LIBDIR="%{_libdir}" SHLIBDIR="%{_lib}" all
 
@@ -136,6 +136,8 @@ InstallPythonWrapper() {
     install-pywrap
 }
 
+# only install libsemanage
+cd %{name}
 rm -rf ${RPM_BUILD_ROOT}
 mkdir -p ${RPM_BUILD_ROOT}%{_libdir}
 mkdir -p ${RPM_BUILD_ROOT}%{_includedir} 
