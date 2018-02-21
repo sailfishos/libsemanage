@@ -122,9 +122,6 @@ make CFLAGS="%{optflags}" swigify
 make CFLAGS="%{optflags}" LIBDIR="%{_libdir}" SHLIBDIR="%{_lib}" all
 
 BuildPythonWrapper \
-  %{__python}
-  
-BuildPythonWrapper \
   %{__python3}
 
 %install
