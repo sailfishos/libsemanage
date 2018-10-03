@@ -132,7 +132,7 @@ InstallPythonWrapper() {
 
   make \
     PYTHON=$BinaryName \
-    DESTDIR="${RPM_BUILD_ROOT}" LIBDIR="${RPM_BUILD_ROOT}%{_libdir}" SHLIBDIR="${RPM_BUILD_ROOT}/%{_libdir}" \
+    DESTDIR="${RPM_BUILD_ROOT}" LIBDIR="%{_libdir}" SHLIBDIR="%{_libdir}" \
     install-pywrap
 }
 
@@ -143,14 +143,14 @@ mkdir -p ${RPM_BUILD_ROOT}%{_libdir}
 mkdir -p ${RPM_BUILD_ROOT}%{_includedir} 
 mkdir -p ${RPM_BUILD_ROOT}%{_sharedstatedir}/selinux
 mkdir -p ${RPM_BUILD_ROOT}%{_sharedstatedir}/selinux/tmp
-make DESTDIR="${RPM_BUILD_ROOT}" LIBDIR="${RPM_BUILD_ROOT}%{_libdir}" SHLIBDIR="${RPM_BUILD_ROOT}/%{_libdir}" install
+make DESTDIR="${RPM_BUILD_ROOT}" LIBDIR="%{_libdir}" SHLIBDIR="%{_libdir}" install
 
 InstallPythonWrapper \
   %{__python3} \
   $(python3-config --extension-suffix)
   
 cp %{SOURCE1} ${RPM_BUILD_ROOT}/etc/selinux/semanage.conf
-ln -sf  %{_libdir}/libsemanage.so.1 ${RPM_BUILD_ROOT}/%{_libdir}/libsemanage.so
+#ln -sf  %{_libdir}/libsemanage.so.1 ${RPM_BUILD_ROOT}/%{_libdir}/libsemanage.so
 
 sed -i '1s%\(#! */usr/bin/python\)\([^3].*\|\)$%\13\2%' %{buildroot}%{_libexecdir}/selinux/semanage_migrate_store
 
