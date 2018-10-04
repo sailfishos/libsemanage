@@ -20,14 +20,14 @@
 # TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 # SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-%define libsepolver 2.7-1
-%define libselinuxver 2.7-1
+%define libsepolver 2.8-1
+%define libselinuxver 2.8-1
 %define python3_sitearch /%{_libdir}/python3.?/site-packages
 
 Summary: SELinux binary policy manipulation library 
 Name: libsemanage
-Version: 2.7
-Release: 9%{?dist}
+Version: 2.8
+Release: 1%{?dist}
 License: LGPLv2+
 Group: System Environment/Libraries
 Source: %{name}-%{version}.tar.bz2
