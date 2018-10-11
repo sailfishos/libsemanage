@@ -156,7 +156,7 @@ InstallPythonWrapper \
   $(python3-config --extension-suffix)
   
 cp %{SOURCE1} ${RPM_BUILD_ROOT}/etc/selinux/semanage.conf
-#ln -sf  %{_libdir}/libsemanage.so.1 ${RPM_BUILD_ROOT}/%{_libdir}/libsemanage.so
+ln -sf  %{_libdir}/libsemanage.so.1 ${RPM_BUILD_ROOT}/%{_libdir}/libsemanage.so
 
 sed -i '1s%\(#! */usr/bin/python\)\([^3].*\|\)$%\13\2%' %{buildroot}%{_libexecdir}/selinux/semanage_migrate_store
 
