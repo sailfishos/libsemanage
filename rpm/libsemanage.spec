@@ -37,10 +37,15 @@ Source: %{name}-%{version}.tar.bz2
 URL: https://github.com/SELinuxProject/selinux/wiki
 Source1: semanage.conf
 Obsoletes: libsemanage1
-BuildRequires: libselinux-devel >= %{libselinuxver} swig ustr-devel
-BuildRequires: libsepol-devel >= %{libsepolver} 
 BuildRequires: audit-libs-devel
-BuildRequires: bison flex bzip2-devel
+BuildRequires: bison
+BuildRequires: bzip2-devel
+BuildRequires: dbus-glib-devel
+BuildRequires: flex
+BuildRequires: libselinux-devel >= %{libselinuxver}
+BuildRequires: libsepol-devel >= %{libsepolver}
+BuildRequires: swig
+BuildRequires: ustr-devel
 
 # we don't build python2 modules, but make clean expects python2 (could be patched out though)
 BuildRequires: python
