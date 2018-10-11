@@ -54,6 +54,7 @@ BuildRequires: python3-base
 BuildRequires: python3-devel
 
 Requires: bzip2-libs audit-libs
+Requires: libselinux%{?_isa} >= %{libselinuxver}
 
 %description
 Security-enhanced Linux is a feature of the Linux® kernel and a number
