@@ -36,7 +36,6 @@ Group: System Environment/Libraries
 Source: %{name}-%{version}.tar.bz2
 URL: https://github.com/SELinuxProject/selinux/wiki
 Source1: semanage.conf
-Obsoletes: libsemanage1
 BuildRequires: audit-libs-devel
 BuildRequires: bison
 BuildRequires: bzip2-devel
@@ -95,11 +94,8 @@ Summary: semanage python 3 bindings for libsemanage
 Group: Development/Libraries
 Requires: %{name} = %{version}-%{release}
 Requires: libselinux-python3
-%{?python_provide:%python_provide python3-libsemanage}
-
 Provides: %{name}-python3 = %{version}-%{release}
 Provides: %{name}-python3 = %{version}-%{release}
-Obsoletes: %{name}-python3 < %{version}-%{release}
 
 %description -n python3-libsemanage
 The libsemanage-python3 package contains the python 3 bindings for developing
