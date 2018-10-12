@@ -54,7 +54,7 @@ BuildRequires: python3-base
 BuildRequires: python3-devel
 
 Requires: bzip2-libs audit-libs
-Requires: libselinux%{?_isa} >= %{libselinuxver}
+Requires: libselinux >= %{libselinuxver}
 
 %description
 Security-enhanced Linux is a feature of the Linux® kernel and a number
@@ -75,7 +75,7 @@ on binary policies such as customizing policy boolean settings.
 %package static
 Summary: Static library used to build policy manipulation tools
 Group: Development/Libraries
-Requires: libsemanage-devel%{_isa} = %{version}-%{release}
+Requires: libsemanage-devel = %{version}-%{release}
 
 %description static
 The semanage-static package contains the static libraries 
@@ -84,7 +84,7 @@ needed for developing applications that manipulate binary policies.
 %package devel
 Summary: Header files and libraries used to build policy manipulation tools
 Group: Development/Libraries
-Requires: %{name}%{?_isa} = %{version}-%{release} ustr
+Requires: %{name} = %{version}-%{release} ustr
 
 %description devel
 The semanage-devel package contains the libraries and header files
@@ -93,12 +93,12 @@ needed for developing applications that manipulate binary policies.
 %package -n python3-libsemanage
 Summary: semanage python 3 bindings for libsemanage
 Group: Development/Libraries
-Requires: %{name}%{?_isa} = %{version}-%{release}
+Requires: %{name} = %{version}-%{release}
 Requires: libselinux-python3
 %{?python_provide:%python_provide python3-libsemanage}
 
 Provides: %{name}-python3 = %{version}-%{release}
-Provides: %{name}-python3%{?_isa} = %{version}-%{release}
+Provides: %{name}-python3 = %{version}-%{release}
 Obsoletes: %{name}-python3 < %{version}-%{release}
 
 %description -n python3-libsemanage
