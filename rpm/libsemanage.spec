@@ -30,7 +30,7 @@
 Summary: SELinux binary policy manipulation library 
 Name: libsemanage
 Version: 2.8
-Release: 1%{?dist}
+Release: 1
 License: LGPLv2+
 Group: System Environment/Libraries
 Source: %{name}-%{version}.tar.bz2
