@@ -116,7 +116,7 @@ BuildPythonWrapper() {
   # Perform the build from the upstream Makefile:
   make \
     PYTHON=$BinaryName \
-    CFLAGS="%{optflags}" LIBDIR="%{_libdir}" SHLIBDIR="%{_lib}" \
+    CFLAGS="%{optflags}" LIBDIR="%{_libdir}" SHLIBDIR="%{_libdir}" \
     pywrap
 }
 
@@ -124,7 +124,7 @@ make clean
 # only build libsemanage
 cd %{name}
 make CFLAGS="%{optflags}" swigify
-make CFLAGS="%{optflags}" LIBDIR="%{_libdir}" SHLIBDIR="%{_lib}" all
+make CFLAGS="%{optflags}" LIBDIR="%{_libdir}" SHLIBDIR="%{_libdir}" all
 
 BuildPythonWrapper \
   %{__python3}
@@ -171,7 +171,6 @@ rm -rf ${RPM_BUILD_ROOT}
 %dir %{_sysconfdir}/selinux
 %config(noreplace) %{_sysconfdir}/selinux/semanage.conf
 %{_libdir}/libsemanage.so.1
-%{_mandir}/man5/*
 %dir %{_libexecdir}/selinux
 %dir %{_sharedstatedir}/selinux
 %dir %{_sharedstatedir}/selinux/tmp
@@ -188,6 +187,7 @@ rm -rf ${RPM_BUILD_ROOT}
 %dir %{_includedir}/semanage
 %{_includedir}/semanage/*.h
 %{_mandir}/man3/*
+%{_mandir}/man5/*
 
 %files -n python3-libsemanage
 %defattr(-,root,root)
