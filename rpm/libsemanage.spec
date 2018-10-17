@@ -105,8 +105,6 @@ SELinux management applications.
 %setup -q -n %{name}-%{version}/upstream
 
 %build
-export LDFLAGS="%{?__global_ldflags}"
-
 # To support building the Python wrapper against multiple Python runtimes
 # Define a function, for how to perform a "build" of the python wrapper against
 # a specific runtime:
