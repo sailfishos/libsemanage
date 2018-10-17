@@ -44,7 +44,7 @@ BuildRequires: flex
 BuildRequires: libselinux-devel >= %{libselinuxver}
 BuildRequires: libsepol-devel >= %{libsepolver}
 BuildRequires: swig
-BuildRequires: ustr-devel
+BuildRequires: libustr-devel
 
 # we don't build python2 modules, but make clean expects python2 (could be patched out though)
 BuildRequires: python
@@ -83,7 +83,7 @@ needed for developing applications that manipulate binary policies.
 %package devel
 Summary: Header files and libraries used to build policy manipulation tools
 Group: Development/Libraries
-Requires: %{name} = %{version}-%{release} ustr
+Requires: %{name} = %{version}-%{release} libustr
 
 %description devel
 The semanage-devel package contains the libraries and header files
