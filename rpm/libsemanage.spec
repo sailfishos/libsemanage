@@ -167,7 +167,7 @@ rm -rf ${RPM_BUILD_ROOT}
 %defattr(-,root,root)
 %doc %{name}/COPYING
 %dir %{_sysconfdir}/selinux
-%config(noreplace) %{_sysconfdir}/selinux/semanage.conf
+%config %{_sysconfdir}/selinux/semanage.conf
 %{_libdir}/libsemanage.so.1
 %dir %{_libexecdir}/selinux
 %dir %{_sharedstatedir}/selinux
