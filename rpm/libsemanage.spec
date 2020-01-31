@@ -1,6 +1,6 @@
 # based on work by The Fedora Project (2017)
 # Copyright (c) 1998, 1999, 2000 Thai Open Source Software Center Ltd
-# 
+#
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
 # "Software"), to deal in the Software without restriction, including
@@ -8,10 +8,10 @@
 # distribute, sublicense, and/or sell copies of the Software, and to
 # permit persons to whom the Software is furnished to do so, subject to
 # the following conditions:
-# 
+#
 # The above copyright notice and this permission notice shall be included
 # in all copies or substantial portions of the Software.
-# 
+#
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 # EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 # MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
@@ -20,20 +20,20 @@
 # TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 # SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-%define libsepolver 2.8
-%define libselinuxver 2.8
+%define libsepolver 3.0
+%define libselinuxver 3.0
 
 %if ! %{defined python3_sitearch}
 %define python3_sitearch /%{_libdir}/python3.?/site-packages
 %endif
 
-Summary: SELinux binary policy manipulation library 
+Summary: SELinux binary policy manipulation library
 Name: libsemanage
-Version: 2.8
+Version: 3.0
 Release: 1
 License: LGPLv2+
-Group: System Environment/Libraries
 Source: %{name}-%{version}.tar.bz2
+Patch0: 0001-libsemanage-Fix-RESOURCE_LEAK-and-USE_AFTER_FREE-cov.patch
 URL: https://github.com/SELinuxProject/selinux/wiki
 Source1: semanage.conf
 BuildRequires: audit-libs-devel
@@ -45,9 +45,6 @@ BuildRequires: libselinux-devel >= %{libselinuxver}
 BuildRequires: libsepol-devel >= %{libsepolver}
 BuildRequires: swig
 BuildRequires: libustr-devel
-
-# we don't build python2 modules, but make clean expects python2 (could be patched out though)
-BuildRequires: python
 
 BuildRequires: python3-base
 BuildRequires: python3-devel
@@ -73,25 +70,22 @@ on binary policies such as customizing policy boolean settings.
 
 %package static
 Summary: Static library used to build policy manipulation tools
-Group: Development/Libraries
 Requires: libsemanage-devel = %{version}-%{release}
 
 %description static
-The semanage-static package contains the static libraries 
-needed for developing applications that manipulate binary policies. 
+The semanage-static package contains the static libraries
+needed for developing applications that manipulate binary policies.
 
 %package devel
 Summary: Header files and libraries used to build policy manipulation tools
-Group: Development/Libraries
 Requires: %{name} = %{version}-%{release} libustr
 
 %description devel
 The semanage-devel package contains the libraries and header files
-needed for developing applications that manipulate binary policies. 
+needed for developing applications that manipulate binary policies.
 
 %package -n python3-libsemanage
 Summary: semanage python 3 bindings for libsemanage
-Group: Development/Libraries
 Requires: %{name} = %{version}-%{release}
 Requires: libselinux-python3
 Provides: %{name}-python3 = %{version}-%{release}
@@ -102,7 +96,7 @@ The libsemanage-python3 package contains the python 3 bindings for developing
 SELinux management applications.
 
 %prep
-%setup -q -n %{name}-%{version}/upstream
+%autosetup -p1 -n %{name}-%{version}/upstream
 
 %build
 # To support building the Python wrapper against multiple Python runtimes
@@ -141,7 +135,7 @@ InstallPythonWrapper() {
 cd %{name}
 rm -rf ${RPM_BUILD_ROOT}
 mkdir -p ${RPM_BUILD_ROOT}%{_libdir}
-mkdir -p ${RPM_BUILD_ROOT}%{_includedir} 
+mkdir -p ${RPM_BUILD_ROOT}%{_includedir}
 mkdir -p ${RPM_BUILD_ROOT}%{_sharedstatedir}/selinux
 mkdir -p ${RPM_BUILD_ROOT}%{_sharedstatedir}/selinux/tmp
 make DESTDIR="${RPM_BUILD_ROOT}" LIBDIR="%{_libdir}" SHLIBDIR="%{_libdir}" install
@@ -149,14 +143,11 @@ make DESTDIR="${RPM_BUILD_ROOT}" LIBDIR="%{_libdir}" SHLIBDIR="%{_libdir}" insta
 InstallPythonWrapper \
   %{__python3} \
   $(python3-config --extension-suffix)
-  
+
 cp %{SOURCE1} ${RPM_BUILD_ROOT}/etc/selinux/semanage.conf
 ln -sf  %{_libdir}/libsemanage.so.1 ${RPM_BUILD_ROOT}/%{_libdir}/libsemanage.so
 
 sed -i '1s%\(#! */usr/bin/python\)\([^3].*\|\)$%\13\2%' %{buildroot}%{_libexecdir}/selinux/semanage_migrate_store
-
-%clean
-rm -rf ${RPM_BUILD_ROOT}
 
 %post
 /sbin/ldconfig
@@ -165,7 +156,7 @@ rm -rf ${RPM_BUILD_ROOT}
 
 %files
 %defattr(-,root,root)
-%doc %{name}/COPYING
+%license %{name}/COPYING
 %dir %{_sysconfdir}/selinux
 %config %{_sysconfdir}/selinux/semanage.conf
 %{_libdir}/libsemanage.so.1
@@ -186,6 +177,7 @@ rm -rf ${RPM_BUILD_ROOT}
 %{_includedir}/semanage/*.h
 %{_mandir}/man3/*
 %{_mandir}/man5/*
+%{_mandir}/ru/man5/*
 
 %files -n python3-libsemanage
 %defattr(-,root,root)
