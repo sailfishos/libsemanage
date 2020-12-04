@@ -1,15 +1,15 @@
-From 4a8aa78cd21b400c13b1895c03a97a8974aeff47 Mon Sep 17 00:00:00 2001
+From f2dcac4e4b5d19c2a503799fba3456084c2b87f7 Mon Sep 17 00:00:00 2001
 From: Petr Lautrbach <plautrba@redhat.com>
 Date: Wed, 7 Nov 2018 18:17:34 +0100
 Subject: [PATCH] libsemanage: Fix RESOURCE_LEAK and USE_AFTER_FREE coverity
  scan defects
- 
+
 ---
  libsemanage/src/direct_api.c | 21 ++++++++-------------
  1 file changed, 8 insertions(+), 13 deletions(-)
- 
+
 diff --git a/libsemanage/src/direct_api.c b/libsemanage/src/direct_api.c
-index 1088a0ac6165..79aa72b98cf5 100644
+index d2b91fb2..f445cd4d 100644
 --- a/libsemanage/src/direct_api.c
 +++ b/libsemanage/src/direct_api.c
 @@ -1028,7 +1028,7 @@ static int semanage_direct_write_langext(semanage_handle_t *sh,
@@ -62,4 +62,5 @@ index 1088a0ac6165..79aa72b98cf5 100644
  }
  
 -- 
-2.23.0
+2.28.0
+

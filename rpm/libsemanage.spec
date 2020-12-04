@@ -29,13 +29,13 @@
 
 Summary: SELinux binary policy manipulation library
 Name: libsemanage
-Version: 3.0
+Version: 3.1
 Release: 1
 License: LGPLv2+
-Source: %{name}-%{version}.tar.bz2
-Patch0: 0001-libsemanage-Fix-RESOURCE_LEAK-and-USE_AFTER_FREE-cov.patch
 URL: https://github.com/SELinuxProject/selinux/wiki
+Source: %{name}-%{version}.tar.bz2
 Source1: semanage.conf
+Patch0: 0001-libsemanage-Fix-RESOURCE_LEAK-and-USE_AFTER_FREE-cov.patch
 BuildRequires: audit-libs-devel
 BuildRequires: bison
 BuildRequires: bzip2-devel
