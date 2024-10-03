@@ -44,7 +44,6 @@ BuildRequires: flex
 BuildRequires: libselinux-devel >= %{libselinuxver}
 BuildRequires: libsepol-devel >= %{libsepolver}
 BuildRequires: swig
-BuildRequires: libustr-devel
 
 BuildRequires: python3-base
 BuildRequires: python3-devel
@@ -78,7 +77,7 @@ needed for developing applications that manipulate binary policies.
 
 %package devel
 Summary: Header files and libraries used to build policy manipulation tools
-Requires: %{name} = %{version}-%{release} libustr
+Requires: %{name} = %{version}-%{release}
 
 %description devel
 The semanage-devel package contains the libraries and header files
