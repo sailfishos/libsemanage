@@ -20,22 +20,17 @@
 # TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 # SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-%define libsepolver 3.0
-%define libselinuxver 3.0
-
-%if ! %{defined python3_sitearch}
-%define python3_sitearch /%{_libdir}/python3.?/site-packages
-%endif
+%define libsepolver 3.7
+%define libselinuxver 3.7
 
 Summary: SELinux binary policy manipulation library
 Name: libsemanage
-Version: 3.1
+Version: 3.7
 Release: 1
 License: LGPLv2+
 URL: https://github.com/SELinuxProject/selinux/wiki
 Source: %{name}-%{version}.tar.bz2
 Source1: semanage.conf
-Patch0: 0001-libsemanage-Fix-RESOURCE_LEAK-and-USE_AFTER_FREE-cov.patch
 BuildRequires: audit-libs-devel
 BuildRequires: bison
 BuildRequires: bzip2-devel
@@ -144,7 +139,6 @@ InstallPythonWrapper \
   $(python3-config --extension-suffix)
 
 cp %{SOURCE1} ${RPM_BUILD_ROOT}/etc/selinux/semanage.conf
-ln -sf  %{_libdir}/libsemanage.so.1 ${RPM_BUILD_ROOT}/%{_libdir}/libsemanage.so
 
 sed -i '1s%\(#! */usr/bin/python\)\([^3].*\|\)$%\13\2%' %{buildroot}%{_libexecdir}/selinux/semanage_migrate_store
 
@@ -154,32 +148,26 @@ sed -i '1s%\(#! */usr/bin/python\)\([^3].*\|\)$%\13\2%' %{buildroot}%{_libexecdi
 %postun -p /sbin/ldconfig
 
 %files
-%defattr(-,root,root)
-%license %{name}/COPYING
+%license LICENSE
 %dir %{_sysconfdir}/selinux
 %config %{_sysconfdir}/selinux/semanage.conf
-%{_libdir}/libsemanage.so.1
+%{_libdir}/libsemanage.so.2
 %dir %{_libexecdir}/selinux
 %dir %{_sharedstatedir}/selinux
 %dir %{_sharedstatedir}/selinux/tmp
 
-
 %files static
-%defattr(-,root,root)
 %{_libdir}/libsemanage.a
 
 %files devel
-%defattr(-,root,root)
 %{_libdir}/libsemanage.so
 %{_libdir}/pkgconfig/libsemanage.pc
 %dir %{_includedir}/semanage
 %{_includedir}/semanage/*.h
 %{_mandir}/man3/*
 %{_mandir}/man5/*
-%{_mandir}/ru/man5/*
 
 %files -n python3-libsemanage
-%defattr(-,root,root)
 %{python3_sitearch}/*.so
 %{python3_sitearch}/semanage.py*
 %{python3_sitearch}/__pycache__/semanage*
